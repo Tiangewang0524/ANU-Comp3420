@@ -1,0 +1,281 @@
+Marking guide for COMP3420 assignment 2, 2016
+=============================================
+
+General comment for students: Please follow exactly the questions asked
+  in assignment specifications, as otherwise it is very hard to do an
+  accurate marking!
+
+We deducted -1 mark if you left your submission in draft status rather than
+submitting a final version.
+
+We also deducted marks for submissions longer than the maximum 10 pages
+(as clearly stated in the assignment specifications).
+
+----------------------------------------------------------------------
+
+***** Task 1: 5 marks *****
+
+      The output should follow exactly the example given.
+
+      0.5 mark: correct and complete length 2 frequent item-sets (part 2)
+
+      0.5 mark: correct and complete length 3 frequent item-sets (part 3)
+
+      0.5 mark: correct and complete length 4 candidate item-sets (part 4)
+
+      0.5 mark: correct pruning with correct reasons why pruning occurred 
+	(the missing 3-item sets) or why no pruning was necessary (part 4).
+	-0.25 if counting of 4 item-sets done here, instead of later.
+
+      0.5 mark: correct and complete length 4 frequent item-sets (part 4)  
+	Note this can possibly be an empty set!
+
+      1 mark:   correct and complete rules generated (frequent rules of
+	length 3 from the alphabetically sorted first two large 3-item sets) 
+	and their correct support values (part 5)
+
+      0.5 mark: correct confidence values for these rules (part 5)
+      1 mark:   correct lift values for these rules (part 5)
+
+      Also:
+      -0.25 mark for each counting error/missing item set.
+      -1 mark if the initial database was not generated correctly.
+      
+      If a counting error led to later mistakes (with confidence/lift, etc)
+	students were not penalised twice, provided later results were
+	consistent with previous incorrect results.
+
+  If a student made a mistake when generating the database, then we had
+  to manually check the rest of their task 5 submission.
+
+  No workings beyond what is given in the example output are needed.
+
+----------------------------------------------------------------------
+
+***** Task 2: 4 marks *****
+
+  Each Technique was worth 1 mark.
+  For part 4 of each technique, we wanted you to give an example
+  application where the clustering algorithm either: overcomes some
+  of the specific difficulties with the application, or makes use
+  of the particular strengths of the algorithm (or does both).
+
+  (a) AGNES
+      (1) distance measure to calculate distance between data points,
+          distance measure to calculate distance between clusters, and
+          either number of clusters to generate or minimum cluster
+          similarity.
+      (2) To some degree depends upon distance functions used, but
+          mostly spherical clusters only.
+      (3) Limitation on data depends upon distance function(s) used.
+          Can be sensitive to noise and outliers (single and complete
+          link cluster distances).
+          Algorithm can never undo a merge of two clusters.
+          Has quadratic computational complexity in number of data
+          points, so not really scalable.
+          Every point in the data sets will be included in a cluster.
+      (4) Any application that requires a hierarchical clustering of
+          the data, e.g. character recognition (similar looking
+          letters in a cluster), consumer data, biological data
+          (hierarchies of animal/plant clusters) based on features
+          (descriptions of animals).
+
+  (b) CLARA
+      (1) Only spherical clusters - depends upon distance measure used
+          for categorical data.
+      (2) Distance measure to calculate distance between data points,
+          k=number of clusters, s=size of sample to use
+      (3) The number of clusters must be specified; depending upon
+          distance function used it can be limited to low-dimensional
+          data (curse of dimensionality), uses random sampling, so
+          might not get 'best' clustering.
+          Every point in the data sets will be included in a cluster.
+      (4) Applications with data of both numerical and categorical
+          types, such as customer data, product data, census data with
+          attributes such as marital status, education, salary, etc.
+
+  (c) DBSCAN
+      (1) Any shape of clusters, depending upon density parameters.
+      (2) epsilon neighbourhood, and minpts (to include a point into a
+          cluster), and distance function (for distance between data
+          points).
+      (3) Depending upon distance measure used, it might not work well
+          with high-dimensional data, some randomness in how first
+          data point is selected. Some difficulties in data sets with
+          clusters that have very different densities (i.e. epsilon
+          and minpts are global parameters).
+      (4) Applications where data are very noisy, e.g. outlier
+          detection (outliers are those points not in dense regions).
+
+  (d) k-means
+      (1) k=number of clusters, max number of iterations or another
+          stopping criteria, distance function to be used.
+      (2) Only spherical clusters can be found.
+      (3) Only applicable on numerical data where mean can be
+          calculated; number of clusters must be specified; with
+          Euclidean distance it is limited to low-dimensional data
+          (curse of dimensionality).
+          Every point in the data sets will be included in a cluster.
+      (4) For example financial data, numerical scientific data
+          (e.g. astronomy), geographical data, image data
+          (images represented as numerical features). k-means is widely
+	  used in many areas, despite its limitations.
+
+----------------------------------------------------------------------
+
+***** Task 3: 4 marks *****
+
+  Part (a):
+      1 mark: Correct confusion matrix, including 'Total' number and
+	normalised confusion matrix (percentages). 0.5 mark each.
+
+      1 mark: Correct accuracy and error rate percentage numbers.
+	0.5 mark each.
+
+      1 mark: Correct specificity, precision, recall and f-measure
+        as percentage numbers. 0.25 mark each.
+
+      Workings are needed for the formulas. If only the results are
+      shown but not the formulas then do not award a mark for this
+      part, if only the formulas but not the numerical values inserted
+      into the formulas are shown deduct -0.25 (from 1 mark) for parts
+      2 and 3.
+
+      If a student made a mistake when generating the confusion
+      matrix (part 1), then we had to manually check the rest of
+      their task 2 submission.
+
+  Part (b):
+      0.5 mark:  Correct balance ratio.
+
+      0.5 mark:  If the problem is imbalanced, accuracy is not suitable 
+	as it will be too high - many TN values due to class imbalance. 
+        Precision and recall are better as they do not include TN in
+        the equation.
+
+----------------------------------------------------------------------
+
+***** Task 4: 2 marks *****
+
+  (a) Age=Young, Gender=Male, Employed=Yes, Student=No, Has car=No,
+      Class = Neg
+        Gender = Male -> Age = Young -> Pos
+        D-TRee output: Pos -> False Positive
+
+  (b) Age=Old, Gender=Male, Employed=Yes, Student=Yes, Has car=No,
+      Class=Neg
+        Gender = Male -> Age = Old -> Has Car = No -> Neg
+        D-TRee output: Neg -> True Negative
+
+  (c) Age=Young, Gender=Female, Employed=Yes, Student=No, Has car=No,
+      Class=Neg
+        Gender = Female -> Student = No -> Neg
+        D-TRee output: Neg -> True negative
+
+  (d) Age=Middle, Gender=Female, Employed=Yes, Student=Yes,
+      Has car=Yes, Class=Pos
+        Gender = Female -> Student = Yes -> Employed = Yes -> Neg
+        D-TRee output: Neg -> False negative
+
+  0.5 mark for each correct answer, with the decision of why this
+       answer included (workings).
+
+  No mark if only the outcome (TN, FN, etc.) but no workings shown.
+
+----------------------------------------------------------------------
+
+***** Task 5 (data mining project): 5 marks *****
+
+      (a) Data Exploration. 1 Mark.
+          The data exploration needs to include:
+           - number of records in the data set
+           - number of attributes in the data set
+           - types (numerical, categorical (ordinal, nominal, etc.)
+           - data distributions for numerical attributes
+           - number of categories for categorical attributes
+           - description of missing values
+           - some other statistical measures, correlation plots, etc
+
+          A table listing all attributes and their types would be the
+          best answer.
+
+          -1 if text copied directly from UCI (you might have to
+             check) and not attributed/cited
+
+          -0.5 marks if only some attributes are described, or
+               types are not given, etc.
+
+         -0.5 marks if they did not describe what the data set
+              is and why it was collected.
+
+         -0.5 marks if the description is "then I clicked on
+              the 'Execute button'..", etc.
+
+         -0.5  marks if no correlation plot, no mentioning of
+               mean, mode, median etc., no mentioning of skewness,
+               no Benford etc. is given. 
+
+         Which measures are interesting/appropriate varies from
+         data set to data set, main emphasis is on analysis and
+         justification.
+
+      (b) Data cleaning and transformation: 1 Mark
+          Description of the reasoning behind any cleaning and/or
+          transformation, or if not done then a reason why no
+          cleaning or transformation was needed. (Example of
+          transformation is normalisation in 0..1 interval)
+
+         -0.5 if no clear explanation is given why or why no
+              transformation was done.
+
+         -0.5 if no normalisation is done but un-normalised data
+              are later used in an algorithm that would required
+              normalised values (e.g k-means).
+
+         -0.5 if only some variables were used without a
+              justification given why (or the justification is not
+              well explained).
+
+         -0.5  If description given is wrong in some way.
+
+         -0.25 or more if description given is too brief, unclear,
+               messy, etc.
+
+      (c) Data mining algorithm(s) used: 2 Marks
+          Again, some description why a certain algorithm was used,
+          how it was used (parameter settings?), what the intention
+          was, etc.
+
+         -0.5 if no description is given why a certain algorithm
+              was used.
+
+         -1.0 if no discussion about parameter settings/inputs.
+
+         -0.5 if no discussion of evaluation measures and reasons.
+
+         -1 if algorithm used incorrectly (i.e. clustering used to
+            do classification).
+
+         -0.25 (or more) if descriptions are wrong, too brief, messy,
+               unclear, etc.
+
+      (d) Outcomes of your project: 1 Mark
+          A presentation of results in the form of description of
+          classes, rules, clusters, error matrices, or graphics such
+          as ROC or risk curves, etc. plus some description of the
+          results.
+
+          -0.5 marks if only plots or an error matrix is given with
+               out any description.
+
+         -0.5 if no figures or tables are included but only textual
+              description.
+
+         -0.25 (or more) if results are incorrect, poorly interpreted,
+               unclear, messy, inappropriate, etc.
+
+
+      -1 if the data set name, and source URL not clearly presented
+         at the start of Task 5, or in the answer to part (a).
+
+      -1 if a data set which we already used in tutorials was selected.
